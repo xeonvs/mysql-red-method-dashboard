@@ -181,7 +181,7 @@
           "format": 1,
           "interval": "1m",
           "intervalFactor": 1,
-          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t\nORDER BY t",
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/avg(period_length) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t\nORDER BY t",
           "refId": "A",
           "round": "1m",
           "table": "metrics",
@@ -516,7 +516,7 @@
           "format": 1,
           "interval": "1m",
           "intervalFactor": 1,
-          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/avg(period_length) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
           "refId": "A",
           "round": "1m",
           "table": "metrics",
@@ -889,7 +889,7 @@
               "format": 1,
               "interval": "1m",
               "intervalFactor": 1,
-              "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and node_name='$NodeName'\nGROUP BY t\nORDER BY t",
+              "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/avg(period_length) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and node_name='$NodeName'\nGROUP BY t\nORDER BY t",
               "refId": "A",
               "round": "1m",
               "table": "metrics",
@@ -1508,7 +1508,7 @@
           "format": 1,
           "interval": "1m",
           "intervalFactor": 1,
-          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/avg(period_length) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
           "refId": "A",
           "round": "1m",
           "table": "metrics",
@@ -1635,7 +1635,7 @@
           "format": 1,
           "interval": "1m",
           "intervalFactor": 1,
-          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/($__interval_ms / 1000) as Load,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/avg(period_length) as Load,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
           "refId": "A",
           "round": "1m",
           "table": "metrics",
@@ -3226,5 +3226,5 @@
   "variables": {
     "list": []
   },
-  "version": 31
+  "version": 32
 }
