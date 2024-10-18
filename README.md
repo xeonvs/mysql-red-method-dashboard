@@ -1,6 +1,8 @@
 # MySQL RED Method Dashboard
 
-This project provides an updated version of the MySQL performance analysis dashboard using the RED Method. The original concept was introduced by Percona in their blog post: [RED Method for MySQL Performance Analysis](https://www.percona.com/blog/red-method-for-mysql-performance-analyses/).
+This project provides an updated version of the MySQL performance analysis dashboard using the RED Method. 
+The original concept was introduced by Percona in their blog post: [RED Method for MySQL Performance Analysis](https://www.percona.com/blog/red-method-for-mysql-performance-analyses/).
+
 ![screenshot](screenshot.png)
 
 ## 🚀 Overview
@@ -32,8 +34,7 @@ This project aims to adapt the original queries, variables, and styles to work s
 
 ## ⚙️ Requirements
 
-- **PMM Server** (the latest version recommended)
-- **Grafana** (the latest version recommended)
+- **[PMM Server](https://www.percona.com/software/database-tools/percona-monitoring-and-management)** (the latest version recommended)
 
 ## 🖥 Usage
 
@@ -51,7 +52,7 @@ If you encounter any issues or have suggestions for improvements, feel free to o
 ## 🔗 Links
 
 - Blog post: [RED Method for MySQL Performance Analysis](https://www.percona.com/blog/red-method-for-mysql-performance-analyses/)
-- GitHub Project: [MySQL RED Method Dashboard](https://github.com/xeonvs/mysql-red-method-dashboard)
+- Blog post: [The RED Method: A New Approach to Monitoring Microservices](https://thenewstack.io/monitoring-microservices-red-method/)
 
 ## 🏷 Tags
 
