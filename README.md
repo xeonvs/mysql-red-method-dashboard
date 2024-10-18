@@ -1,6 +1,7 @@
 # MySQL RED Method Dashboard
 
 This project provides an updated version of the MySQL performance analysis dashboard using the RED Method. The original concept was introduced by Percona in their blog post: [RED Method for MySQL Performance Analysis](https://www.percona.com/blog/red-method-for-mysql-performance-analyses/).
+![screenshot](screenshot.png)
 
 ## 🚀 Overview
 
