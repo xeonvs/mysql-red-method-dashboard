@@ -23,7 +23,7 @@ This project aims to adapt the original queries, variables, and styles to work s
 
 ## 🛠 Installation
 
-1. Clone the repository or download `12470_rev3.json` file:
+1. Clone the repository or download [12470_rev3.json](dashboard/12470_rev3.json) file:
    ```bash
    git clone https://github.com/xeonvs/mysql-red-method-dashboard.git
    ```
