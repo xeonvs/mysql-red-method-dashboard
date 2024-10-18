@@ -22,13 +22,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "6.7.3"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
+      "version": "9.0.0"
     },
     {
       "type": "datasource",
@@ -60,21 +54,31 @@
       {
         "$$hashKey": "object:357",
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 12470,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1592264566148,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -87,11 +91,16 @@
       },
       "id": 77,
       "panels": [],
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "refId": "A"
+        }
+      ],
       "title": "About Dashboard",
       "type": "row"
     },
     {
-      "content": "\n# RED Method Analyses for MySQL Query Performance \n\nThis dashboard accessess data in Clickhouse directly.  Use Filters for ad-hoc filtering of the data set\nFor More Information on READ Method Check Out  [RED Method](https://thenewstack.io/monitoring-microservices-red-method/)\n\n\n\n",
       "datasource": "${DS_PROMETHEUS}",
       "description": "",
       "gridPos": {
@@ -101,10 +110,23 @@
         "y": 1
       },
       "id": 75,
-      "mode": "markdown",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "\n# RED Method Analyses for MySQL Query Performance \n\nThis dashboard accesses data in Clickhouse directly.  Use Filters for ad-hoc filtering of the data set\nFor More Information on READ Method Check Out  [RED Method](https://thenewstack.io/monitoring-microservices-red-method/)\n\n\n\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "refId": "A"
+        }
+      ],
+      "transparent": true,
       "type": "text"
     },
     {
@@ -118,40 +140,80 @@
       },
       "id": 11,
       "panels": [],
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "refId": "A"
+        }
+      ],
       "title": "RED Method Analyses",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 0,
         "y": 5
       },
-      "hiddenSeries": false,
       "id": 2,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -159,21 +221,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -188,99 +257,112 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Total Query Rate",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "ErrorRate": "dark-red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 8,
         "y": 5
       },
-      "hiddenSeries": false,
       "id": 15,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -295,101 +377,142 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Total Error Rate",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "percentunit",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "AvgLatency": "dark-blue",
-        "ErrorRate": "dark-red",
-        "p99Latency": "dark-purple"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AvgLatency"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p99Latency"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 16,
         "y": 5
       },
-      "hiddenSeries": false,
       "id": 16,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -404,83 +527,80 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Total Query Latency",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details ",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 0,
         "y": 14
       },
-      "hiddenSeries": false,
       "id": 38,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -488,27 +608,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details ",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -523,10 +644,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Query Rate Per Node",
       "transformations": [
         {
@@ -536,96 +653,111 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "ErrorRate": "dark-red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 8,
         "y": 14
       },
-      "hiddenSeries": false,
       "id": 39,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -640,10 +772,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": " Error Rate Per Node",
       "transformations": [
         {
@@ -653,98 +781,141 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "percentunit",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "AvgLatency": "dark-blue",
-        "ErrorRate": "dark-red",
-        "p99Latency": "dark-purple"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AvgLatency"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p99Latency"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
         "x": 16,
         "y": 14
       },
-      "hiddenSeries": false,
       "id": 40,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -759,10 +930,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Avg  Query Latency Per Node",
       "transformations": [
         {
@@ -772,44 +939,7 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "s",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
       "collapsed": true,
@@ -823,36 +953,70 @@
       "id": 18,
       "panels": [
         {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
           "datasource": "${DS_CLICKHOUSE}",
-          "decimals": 2,
-          "fill": 0,
-          "fillGradient": 0,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "stepAfter",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 2,
+              "links": [],
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ops"
+            },
+            "overrides": []
+          },
           "gridPos": {
             "h": 9,
             "w": 8,
             "x": 0,
             "y": 24
           },
-          "hiddenSeries": false,
           "id": 19,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "sideWidth": 400,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
           "links": [
             {
               "targetBlank": true,
@@ -860,28 +1024,28 @@
               "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=$NodeName"
             }
           ],
-          "nullPointMode": "null",
           "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "scopedVars": {
-            "NodeName": {
-              "selected": true,
-              "text": "mysql1",
-              "value": "mysql1"
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true,
+              "width": 400
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
             }
           },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
+          "pluginVersion": "9.2.20",
           "targets": [
             {
               "database": "pmm",
+              "datasource": "${DS_CLICKHOUSE}",
               "dateLoading": false,
               "dateTimeColDataType": "period_start",
               "dateTimeType": "DATETIME",
@@ -896,106 +1060,112 @@
               "tableLoading": false
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Query Rate - $NodeName",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:1108",
-              "decimals": 2,
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "$$hashKey": "object:1109",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "aliasColors": {
-            "ErrorRate": "dark-red"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
           "datasource": "${DS_CLICKHOUSE}",
-          "decimals": 2,
-          "fill": 0,
-          "fillGradient": 0,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "stepAfter",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 2,
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ErrorRate"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
           "gridPos": {
             "h": 9,
             "w": 8,
             "x": 8,
             "y": 24
           },
-          "hiddenSeries": false,
           "id": 20,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "sideWidth": 400,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
           "links": [],
-          "nullPointMode": "null",
           "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "scopedVars": {
-            "NodeName": {
-              "selected": true,
-              "text": "mysql1",
-              "value": "mysql1"
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true,
+              "width": 400
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
             }
           },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
+          "pluginVersion": "9.2.20",
           "targets": [
             {
               "database": "pmm",
+              "datasource": "${DS_CLICKHOUSE}",
               "dateLoading": false,
               "dateTimeColDataType": "period_start",
               "dateTimeType": "DATETIME",
@@ -1010,108 +1180,142 @@
               "tableLoading": false
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Error Rate - $NodeName",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:1108",
-              "decimals": 2,
-              "format": "percentunit",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:1109",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         },
         {
-          "aliasColors": {
-            "AvgLatency": "dark-blue",
-            "ErrorRate": "dark-red",
-            "p99Latency": "dark-purple"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
           "datasource": "${DS_CLICKHOUSE}",
-          "decimals": 2,
-          "fill": 0,
-          "fillGradient": 0,
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "stepAfter",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 2,
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "AvgLatency"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ErrorRate"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "p99Latency"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
           "gridPos": {
             "h": 9,
             "w": 8,
             "x": 16,
             "y": 24
           },
-          "hiddenSeries": false,
           "id": 21,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "sideWidth": 400,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
           "links": [],
-          "nullPointMode": "null",
           "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "scopedVars": {
-            "NodeName": {
-              "selected": true,
-              "text": "mysql1",
-              "value": "mysql1"
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true,
+              "width": 400
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
             }
           },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
+          "pluginVersion": "9.2.20",
           "targets": [
             {
               "database": "pmm",
+              "datasource": "${DS_CLICKHOUSE}",
               "dateLoading": false,
               "dateTimeColDataType": "period_start",
               "dateTimeType": "DATETIME",
@@ -1126,52 +1330,17 @@
               "tableLoading": false
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
           "title": "Query Latency - $NodeName",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:1108",
-              "decimals": 2,
-              "format": "s",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:1109",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "type": "timeseries"
         }
       ],
       "repeat": "NodeName",
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "refId": "A"
+        }
+      ],
       "title": "RED for $NodeName",
       "type": "row"
     },
@@ -1182,47 +1351,91 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 32
       },
       "id": 14,
       "panels": [],
+      "targets": [
+        {
+          "datasource": "${DS_PROMETHEUS}",
+          "refId": "A"
+        }
+      ],
       "title": "Additional Dashboards",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "Number of Rows Examined per Row Sent to the client or modified.   The lower the number the more efficiently database is doing the work.  Values above 100 tend to correspond to missing indexes or inefficient queries which crunch a lot of data",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Rows Examined Per Row Sent or Affected",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 33
       },
-      "hiddenSeries": false,
       "id": 3,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -1230,27 +1443,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1265,10 +1479,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Row Based Efficiency (Total)",
       "transformations": [
         {
@@ -1278,106 +1488,108 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "short",
-          "label": "Rows Examined Per Row Sent or Affected",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "Average time it takes for database to produce row to sent to client or  modify row.   When database is running efficiently it should take fraction of millisecond ",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Query Time per Row Sent/Affected",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 33
       },
-      "hiddenSeries": false,
       "id": 59,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "title": " See Query Performance Details",
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1392,10 +1604,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Time Based Efficiency (Total)",
       "transformations": [
         {
@@ -1405,102 +1613,105 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "s",
-          "label": "Query Time per Row Sent/Affected",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 6,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "title": "See Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 43
       },
-      "hiddenSeries": false,
       "id": 12,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "title": "See Query Performance Details",
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "title": "See Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1515,10 +1726,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Queries Per Host ",
       "transformations": [
         {
@@ -1528,78 +1735,79 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1108",
-          "decimals": 2,
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1109",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
-      "fill": 8,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Average Active Queries",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": ""
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 11,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 43
       },
-      "hiddenSeries": false,
       "id": 7,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -1607,27 +1815,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": ""
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1642,10 +1851,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Query Load Per Host",
       "transformations": [
         {
@@ -1655,79 +1860,80 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:800",
-          "decimals": 2,
-          "format": "short",
-          "label": "Average Active Queries",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:801",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "For READ Queries how much time is spent per Row Sent.  Values above 1ms tend to correspond to seriously inefficient system",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Rows Examined Per Row Sent",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 54
       },
-      "hiddenSeries": false,
       "id": 60,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -1735,27 +1941,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1770,10 +1977,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "READ Query Time Based Efficiency",
       "transformations": [
         {
@@ -1783,106 +1986,108 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "s",
-          "label": "Rows Examined Per Row Sent",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "For READ Queries how many rows/sec is system able to crunch.  Low values tend to correspond to poor CPU performance,  Poor Cache efficiency, contention.  Higher values means \"work\" is being done more efficiently but it may be wrong work, for example scanning tables with no indexes",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Rows Examined per Query Exec Sec",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 54
       },
-      "hiddenSeries": false,
       "id": 61,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "title": "See Query Performance Details",
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -1897,10 +2102,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "READ Query  Data Crunching Efficiency",
       "transformations": [
         {
@@ -1910,79 +2111,80 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "ops",
-          "label": "Rows Examined per Query Exec Sec",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "For WRITE Queries how much time is spent per Row Sent.  Values above 1ms tend to correspond to seriously inefficient system",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Rows Examined Per Row Sent",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 56
+        "y": 64
       },
-      "hiddenSeries": false,
       "id": 78,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "targetBlank": true,
@@ -1990,27 +2192,28 @@
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2025,10 +2228,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "WRITE Query Time Based Efficiency",
       "transformations": [
         {
@@ -2038,106 +2237,108 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "s",
-          "label": "Rows Examined Per Row Sent",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": "${DS_CLICKHOUSE}",
-      "decimals": 2,
       "description": "For WRITE Queries how many rows/sec is system able to crunch.  Low values tend to correspond to poor CPU performance,  Poor Cache efficiency, contention.  Higher values means \"work\" is being done more efficiently but it may be wrong work, for example scanning tables with no indexes",
-      "fill": 0,
-      "fillGradient": 0,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Rows Examined per Query Exec Sec",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Show ${__field.name} Query Performance Details",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+            }
+          ],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 56
+        "y": 64
       },
-      "hiddenSeries": false,
       "id": 80,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sideWidth": 400,
-        "sort": "avg",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [
         {
           "title": "See Query Performance Details",
           "url": "/graph/d/pmm-qan/pmm-query-analytics"
         }
       ],
-      "nullPointMode": "null",
       "options": {
-        "dataLinks": [
-          {
-            "targetBlank": true,
-            "title": "Show ${__field.name} Query Performance Details",
-            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
-          }
-        ]
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "width": 400
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "9.2.20",
       "targets": [
         {
           "database": "pmm",
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2152,10 +2353,6 @@
           "tableLoading": false
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "WRITE Query  Data Crunching Efficiency",
       "transformations": [
         {
@@ -2165,44 +2362,7 @@
           }
         }
       ],
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1920",
-          "decimals": 2,
-          "format": "ops",
-          "label": "Rows Examined per Query Exec Sec",
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1921",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
       "datasource": "${DS_CLICKHOUSE}",
@@ -2346,10 +2506,7 @@
       "targets": [
         {
           "database": "pmm",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "PDEE91DDB90597936"
-          },
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2380,6 +2537,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "align": "auto",
             "displayMode": "auto",
             "filterable": true,
             "inspect": false
@@ -2521,10 +2679,7 @@
       "targets": [
         {
           "database": "pmm",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "PDEE91DDB90597936"
-          },
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2562,6 +2717,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "align": "auto",
             "displayMode": "auto",
             "filterable": true,
             "inspect": false
@@ -2739,10 +2895,7 @@
       "targets": [
         {
           "database": "pmm",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "PDEE91DDB90597936"
-          },
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2785,8 +2938,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -2817,8 +2969,7 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "green",
-                      "value": null
+                      "color": "green"
                     },
                     {
                       "color": "red",
@@ -2849,8 +3000,7 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "green",
-                      "value": null
+                      "color": "green"
                     },
                     {
                       "color": "red",
@@ -2947,10 +3097,7 @@
       "targets": [
         {
           "database": "pmm",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "PDEE91DDB90597936"
-          },
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -2992,8 +3139,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -3121,10 +3267,7 @@
       "targets": [
         {
           "database": "pmm",
-          "datasource": {
-            "type": "grafana-clickhouse-datasource",
-            "uid": "PDEE91DDB90597936"
-          },
+          "datasource": "${DS_CLICKHOUSE}",
           "dateLoading": false,
           "dateTimeColDataType": "period_start",
           "dateTimeType": "DATETIME",
@@ -3156,13 +3299,13 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 22,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "datasource": "ClickHouse",
+        "datasource": "${DS_CLICKHOUSE}",
         "filters": [],
         "hide": 0,
         "label": "Filters",
@@ -3171,7 +3314,7 @@
         "type": "adhoc"
       },
       {
-        "datasource": "ClickHouse",
+        "datasource": "${DS_CLICKHOUSE}",
         "definition": "SELECT DISTINCT node_name from pmm.metrics where service_type='mysql'",
         "hide": 2,
         "includeAll": true,
@@ -3226,5 +3369,5 @@
   "variables": {
     "list": []
   },
-  "version": 32
+  "version": 37
 }
