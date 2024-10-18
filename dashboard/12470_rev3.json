@@ -1,0 +1,3130 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_CLICKHOUSE",
+      "label": "ClickHouse",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "grafana-clickhouse-datasource",
+      "pluginName": "ClickHouse"
+    },
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.7.3"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "9.2.0"
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "grafana-clickhouse-datasource",
+      "name": "ClickHouse",
+      "version": "4.0.2"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "$$hashKey": "object:357",
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": 12470,
+  "graphTooltip": 1,
+  "id": null,
+  "iteration": 1592264566148,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 77,
+      "panels": [],
+      "title": "About Dashboard",
+      "type": "row"
+    },
+    {
+      "content": "\n# RED Method Analyses for MySQL Query Performance \n\nThis dashboard accessess data in Clickhouse directly.  Use Filters for ad-hoc filtering of the data set\nFor More Information on READ Method Check Out  [RED Method](https://thenewstack.io/monitoring-microservices-red-method/)\n\n\n\n",
+      "datasource": "${DS_PROMETHEUS}",
+      "description": "",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 75,
+      "mode": "markdown",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 11,
+      "panels": [],
+      "title": "RED Method Analyses",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 5
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Total Query Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "ops",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "ErrorRate": "dark-red"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 5
+      },
+      "hiddenSeries": false,
+      "id": 15,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries_with_errors)/sum(num_queries) as ErrorRate\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Total Error Rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "AvgLatency": "dark-blue",
+        "ErrorRate": "dark-red",
+        "p99Latency": "dark-purple"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 5
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/sum(m_query_time_cnt) as AvgLatency,\n    avg(m_query_time_p99) as p99Latency\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Total Query Latency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 38,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details ",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Query Rate Per Node",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "ops",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "ErrorRate": "dark-red"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 39,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries_with_errors)/sum(num_queries) as ErrorRate,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name \nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": " Error Rate per Node",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "percentunit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "AvgLatency": "dark-blue",
+        "ErrorRate": "dark-red",
+        "p99Latency": "dark-purple"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 40,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/sum(m_query_time_cnt) as AvgLatency,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Avg  Query Latency per Node",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": true,
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 18,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_CLICKHOUSE}",
+          "decimals": 2,
+          "fill": 0,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 0,
+            "y": 24
+          },
+          "hiddenSeries": false,
+          "id": 19,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": 400,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "See Query Performance Details for $NodeName",
+              "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=$NodeName"
+            }
+          ],
+          "nullPointMode": "null",
+          "options": {
+            "dataLinks": []
+          },
+          "percentage": false,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "scopedVars": {
+            "NodeName": {
+              "selected": true,
+              "text": "mysql1",
+              "value": "mysql1"
+            }
+          },
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "database": "pmm",
+              "dateLoading": false,
+              "dateTimeColDataType": "period_start",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "format": 1,
+              "interval": "1m",
+              "intervalFactor": 1,
+              "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and node_name='$NodeName'\nGROUP BY t\nORDER BY t",
+              "refId": "A",
+              "round": "1m",
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Query Rate - $NodeName",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:1108",
+              "decimals": 2,
+              "format": "ops",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "$$hashKey": "object:1109",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "ErrorRate": "dark-red"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_CLICKHOUSE}",
+          "decimals": 2,
+          "fill": 0,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 8,
+            "y": 24
+          },
+          "hiddenSeries": false,
+          "id": 20,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": 400,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "options": {
+            "dataLinks": []
+          },
+          "percentage": false,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "scopedVars": {
+            "NodeName": {
+              "selected": true,
+              "text": "mysql1",
+              "value": "mysql1"
+            }
+          },
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "database": "pmm",
+              "dateLoading": false,
+              "dateTimeColDataType": "period_start",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "format": 1,
+              "interval": "1m",
+              "intervalFactor": 1,
+              "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries_with_errors)/sum(num_queries) as ErrorRate\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and node_name='$NodeName'\nGROUP BY t\nORDER BY t",
+              "refId": "A",
+              "round": "1m",
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Error Rate - $NodeName",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:1108",
+              "decimals": 2,
+              "format": "percentunit",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "$$hashKey": "object:1109",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "AvgLatency": "dark-blue",
+            "ErrorRate": "dark-red",
+            "p99Latency": "dark-purple"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_CLICKHOUSE}",
+          "decimals": 2,
+          "fill": 0,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 16,
+            "y": 24
+          },
+          "hiddenSeries": false,
+          "id": 21,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "sideWidth": 400,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "options": {
+            "dataLinks": []
+          },
+          "percentage": false,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "scopedVars": {
+            "NodeName": {
+              "selected": true,
+              "text": "mysql1",
+              "value": "mysql1"
+            }
+          },
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "database": "pmm",
+              "dateLoading": false,
+              "dateTimeColDataType": "period_start",
+              "dateTimeType": "DATETIME",
+              "datetimeLoading": false,
+              "format": 1,
+              "interval": "1m",
+              "intervalFactor": 1,
+              "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/sum(m_query_time_cnt) as AvgLatency,\n    avg(m_query_time_p99) as p99Latency\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and node_name='$NodeName'\nGROUP BY t\nORDER BY t",
+              "refId": "A",
+              "round": "1m",
+              "table": "metrics",
+              "tableLoading": false
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Query Latency - $NodeName",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "$$hashKey": "object:1108",
+              "decimals": 2,
+              "format": "s",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "$$hashKey": "object:1109",
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "repeat": "NodeName",
+      "title": "RED for $NodeName",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 14,
+      "panels": [],
+      "title": "Additional Dashboards",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "Number of Rows Examined per Row Sent to the client or modified.   The lower the number the more efficiently database is doing the work.  Values above 100 tend to correspond to missing indexes or inefficient queries which crunch a lot of data",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 3,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum+m_rows_affected_sum) as Rows_exam_per_action,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Row Based Efficiency (Total)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "short",
+          "label": "Rows Examined Per Row Sent or Affected",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "Average time it takes for database to produce row to sent to client or  modify row.   When database is running efficiently it should take fraction of millisecond ",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 59,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "title": " See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/sum(m_rows_sent_sum+m_rows_affected_sum) as Time_per_row_action,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Time Based Efficiency (Total)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "s",
+          "label": "Query Time per Row Sent/Affected",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 35
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "title": "See Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(num_queries)/($__interval_ms / 1000) as QPS,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Queries Per Host ",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1108",
+          "decimals": 2,
+          "format": "ops",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1109",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "fill": 8,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 35
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": ""
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum)/($__interval_ms / 1000) as Load,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Query Load Per Host",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:800",
+          "decimals": 2,
+          "format": "short",
+          "label": "Average Active Queries",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:801",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "For READ Queries how much time is spent per Row Sent.  Values above 1ms tend to correspond to seriously inefficient system",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
+      "hiddenSeries": false,
+      "id": 60,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum*(m_rows_sent_sum>0))/sum(m_rows_sent_sum) as Time_per_row_sent,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "READ Query Time Based Efficiency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "s",
+          "label": "Rows Examined Per Row Sent",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "For READ Queries how many rows/sec is system able to crunch.  Low values tend to correspond to poor CPU performance,  Poor Cache efficiency, contention.  Higher values means \"work\" is being done more efficiently but it may be wrong work, for example scanning tables with no indexes",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 46
+      },
+      "hiddenSeries": false,
+      "id": 61,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_rows_examined_sum*(m_rows_sent_sum>0))/sum(m_query_time_sum*(m_rows_sent_sum>0)) as Rows_Examined_QuerySec,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "READ Query  Data Crunching Efficiency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "ops",
+          "label": "Rows Examined per Query Exec Sec",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "For WRITE Queries how much time is spent per Row Sent.  Values above 1ms tend to correspond to seriously inefficient system",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 56
+      },
+      "hiddenSeries": false,
+      "id": 78,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_query_time_sum*(m_rows_affected_sum>0))/sum(m_rows_affected_sum) as Time_per_row_affected,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "WRITE Query Time Based Efficiency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "s",
+          "label": "Rows Examined Per Row Sent",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_CLICKHOUSE}",
+      "decimals": 2,
+      "description": "For WRITE Queries how many rows/sec is system able to crunch.  Low values tend to correspond to poor CPU performance,  Poor Cache efficiency, contention.  Higher values means \"work\" is being done more efficiently but it may be wrong work, for example scanning tables with no indexes",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 56
+      },
+      "hiddenSeries": false,
+      "id": 80,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
+        "show": true,
+        "sideWidth": 400,
+        "sort": "avg",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [
+        {
+          "title": "See Query Performance Details",
+          "url": "/graph/d/pmm-qan/pmm-query-analytics"
+        }
+      ],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": [
+          {
+            "targetBlank": true,
+            "title": "Show ${__field.name} Query Performance Details",
+            "url": "/graph/d/pmm-qan/pmm-query-analytics?var-node_name=${__field.name}"
+          }
+        ]
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "database": "pmm",
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "rawSql": "SELECT\n    period_start AS t,\n    sum(m_rows_examined_sum*(m_rows_affected_sum>0))/sum(m_query_time_sum*(m_rows_affected_sum>0)) as Rows_Examined_QuerySec,\n    node_name\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) and service_type='mysql'\nGROUP BY t,node_name\nORDER BY t",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "WRITE Query  Data Crunching Efficiency",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1920",
+          "decimals": 2,
+          "format": "ops",
+          "label": "Rows Examined per Query Exec Sec",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1921",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "${DS_CLICKHOUSE}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "decimals": 2,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fingerprint"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1162
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QPS"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency_ms"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 111
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 100
+                    },
+                    {
+                      "color": "red",
+                      "value": 200
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows_exam_per_sent"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 185
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fingerprint"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 74
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "database": "pmm",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "PDEE91DDB90597936"
+          },
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "editorType": "sql",
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "meta": {},
+          "pluginVersion": "4.0.2",
+          "queryType": "table",
+          "rawSql": "SELECT\n    fingerprint,\n    node_name as Host, schema \"Schema\",\n    sum(num_queries)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 QPS,\n    sum(m_query_time_sum)/sum(m_query_time_cnt)*1000 as Latency_ms,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum) as Rows_exam_per_sent\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY node_name,Schema,fingerprint\nORDER BY QPS desc limit 20",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "Frequent Queries",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_CLICKHOUSE}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "decimals": 2,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows_exam_per_sent"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 170
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency_ms"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1000
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QPS"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 68
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Schema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 156
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fingerprint"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 86
+      },
+      "id": 5,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "database": "pmm",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "PDEE91DDB90597936"
+          },
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "editorType": "sql",
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "meta": {},
+          "pluginVersion": "4.0.2",
+          "queryType": "table",
+          "rawSql": "SELECT\n    fingerprint, node_name as Host, schema \"Schema\",\n    sum(num_queries)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 QPS,\n    sum(m_query_time_sum)/sum(m_query_time_cnt)*1000 as Latency_ms,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum) as Rows_exam_per_sent\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY fingerprint,node_name,schema\nORDER BY Latency_ms desc limit 20",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "Slowest Queries",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_CLICKHOUSE}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "decimals": 2,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency_ms"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 115
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1000
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows_exam_per_sent"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 175
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QPS"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 77
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Load"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 72
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 40
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Schema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 148
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 199
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fingerprint"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 99
+      },
+      "id": 6,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "database": "pmm",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "PDEE91DDB90597936"
+          },
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "editorType": "sql",
+          "format": 1,
+          "formattedQuery": "SELECT period_start AS t, count() FROM pmm.metrics WHERE ( period_start  >= $__fromTime AND period_start <= $__toTime ) GROUP BY t ORDER BY t",
+          "interval": "1m",
+          "intervalFactor": 1,
+          "meta": {},
+          "pluginVersion": "4.0.2",
+          "queryType": "table",
+          "rawSql": "SELECT\n    fingerprint,\n    node_name as Host, schema \"Schema\",\n    sum(m_query_time_sum)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 Load,\n    sum(num_queries)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 QPS,\n    sum(m_query_time_sum)/sum(m_query_time_cnt)*1000 as Latency_ms,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum) as Rows_exam_per_sent\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY  node_name,Schema,fingerprint\nORDER BY Load desc limit 20",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "Queries Causing the Load",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_CLICKHOUSE}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "decimals": 2,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency_ms"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 112
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 100
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QPS"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 64
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 5
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows_exam_per_sent"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 168
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Errors"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 74
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Schema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 182
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 194
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 111
+      },
+      "id": 8,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "database": "pmm",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "PDEE91DDB90597936"
+          },
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "editorType": "sql",
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "meta": {},
+          "pluginVersion": "4.0.2",
+          "queryType": "table",
+          "rawSql": "SELECT\n    fingerprint,node_name as Host, schema \"Schema\",\n    sum(num_queries_with_errors) Errors,\n    sum(num_queries)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 QPS,\n    sum(m_query_time_sum)/sum(m_query_time_cnt)*1000 as Latency_ms,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum) as Rows_exam_per_sent\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY node_name, schema, fingerprint\nHaving Errors>0\nORDER BY Errors desc limit 20",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "Queries with Errors",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_CLICKHOUSE}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "decimals": 2,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rows_exam_per_sent"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency_ms"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 112
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QPS"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 63
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Warnings"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 98
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Schema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 183
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 214
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 121
+      },
+      "id": 9,
+      "links": [],
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.2.20",
+      "targets": [
+        {
+          "database": "pmm",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "PDEE91DDB90597936"
+          },
+          "dateLoading": false,
+          "dateTimeColDataType": "period_start",
+          "dateTimeType": "DATETIME",
+          "datetimeLoading": false,
+          "editorType": "sql",
+          "format": 1,
+          "interval": "1m",
+          "intervalFactor": 1,
+          "meta": {},
+          "pluginVersion": "4.0.2",
+          "queryType": "table",
+          "rawSql": "SELECT\n    fingerprint,node_name as Host, schema \"Schema\",\n    sum(num_queries_with_warnings) Warnings,\n    sum(num_queries)/(toUnixTimestamp($__toTime) - toUnixTimestamp($__fromTime))*1000 QPS,\n    sum(m_query_time_sum)/sum(m_query_time_cnt)*1000 as Latency_ms,\n    sum(m_rows_examined_sum)/sum(m_rows_sent_sum) as Rows_exam_per_sent\nFROM pmm.metrics\nWHERE ( period_start  >= $__fromTime AND period_start <= $__toTime )\nGROUP BY fingerprint,node_name,schema\nHaving Warnings>0\nORDER BY Warnings desc limit 20",
+          "refId": "A",
+          "round": "1m",
+          "table": "metrics",
+          "tableLoading": false
+        }
+      ],
+      "title": "Queries with Warnings",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 22,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "datasource": "ClickHouse",
+        "filters": [],
+        "hide": 0,
+        "label": "Filters",
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      },
+      {
+        "datasource": "ClickHouse",
+        "definition": "SELECT DISTINCT node_name from pmm.metrics where service_type='mysql'",
+        "hide": 2,
+        "includeAll": true,
+        "multi": true,
+        "name": "NodeName",
+        "options": [],
+        "query": "SELECT DISTINCT node_name from pmm.metrics where service_type='mysql'",
+        "rawSql": "SELECT DISTINCT node_name from pmm.metrics where service_type='mysql'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-12h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "RED Method for MySQL Queries - Designed for PMM2",
+  "uid": "gZQooogMp",
+  "variables": {
+    "list": []
+  },
+  "version": 30
+}
