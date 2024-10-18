@@ -528,6 +528,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Query Rate Per Node",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -636,7 +644,15 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": " Error Rate per Node",
+      "title": " Error Rate Per Node",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -747,7 +763,15 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Avg  Query Latency per Node",
+      "title": "Avg  Query Latency Per Node",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1246,6 +1270,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Row Based Efficiency (Total)",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1365,6 +1397,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Time Based Efficiency (Total)",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1480,6 +1520,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Queries Per Host ",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1599,6 +1647,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Query Load Per Host",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1719,6 +1775,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "READ Query Time Based Efficiency",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1838,6 +1902,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "READ Query  Data Crunching Efficiency",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1958,6 +2030,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "WRITE Query Time Based Efficiency",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2077,6 +2157,14 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "WRITE Query  Data Crunching Efficiency",
+      "transformations": [
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "many"
+          }
+        }
+      ],
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2820,6 +2908,18 @@
                 "value": 194
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fingerprint"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
           }
         ]
       },
@@ -3126,5 +3226,5 @@
   "variables": {
     "list": []
   },
-  "version": 30
+  "version": 31
 }
